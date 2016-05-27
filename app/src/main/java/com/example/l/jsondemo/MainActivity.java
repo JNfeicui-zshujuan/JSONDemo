@@ -101,43 +101,49 @@ public class MainActivity extends AppCompatActivity {
         }.start();
     }
 
-    private Handler handler = new Handler() {
+    public Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case LOAD:
-                    try {
-                        param(fJsonStr);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+
+
+                    param(fJsonStr);
+
+
                     break;
+
             }
         }
     };
 
-    public void param(String json) throws JSONException {
-        list = new ArrayList<>();
+        public void param(String json) {
+            list = new ArrayList<>();
 
-        try {
-            JSONObject jsonObject = new JSONObject(fJsonStr);
-            JSONArray jsonArray = jsonObject.getJSONArray("students");
-            String classname = jsonObject.getString("classname");
-            Log.d(TAG, "班级   " + classname);
-            mTvShowClass.setText(classname);
-            for (int i = 0; i < jsonArray.length(); i++) {
-                JSONObject jsonObject1 = jsonArray.getJSONObject(i);
-                final String name = jsonObject1.getString("name");
-                int age = jsonObject1.getInt("age");
-                Log.d(TAG, "名字 " + name + "   年龄  " + age);
-                list.add(name);
-                list.add(age);
-                Log.d(TAG, "param: " + list);
+            try {
+                JSONObject jsonObject = new JSONObject(fJsonStr);
+                JSONArray jsonArray = jsonObject.getJSONArray("students");
+                String classname = jsonObject.getString("classname");
+                Log.d(TAG, "班级   " + classname);
+                mTvShowClass.setText(classname);
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject jsonObject1 = jsonArray.getJSONObject(i);
+                    final String name = jsonObject1.getString("name");
+                    int age = jsonObject1.getInt("age");
+                    Log.d(TAG, "名字 " + name + "   年龄  " + age);
+                    list.add(name);
+                    list.add(age);
+                    Log.d(TAG, "param: " + list);
+                }
+                mTvShow.setText(list.get(0).toString() + "    " + list.get(1).toString());
+                mTvShow1.setText(list.get(2).toString() + "   " + list.get(3).toString());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }catch (Exception e){
+
+
             }
-            mTvShow.setText(list.get(0).toString() + "    " + list.get(1).toString());
-            mTvShow1.setText(list.get(2).toString() + "   " + list.get(3).toString());
-        } catch (JSONException e) {
-            throw e;
         }
-    }
+
+
 }
